@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 export default function Home() {
   return (
     <div>
-      <p>Hello</p>
+      {/* <p>Hello this is Signout</p> */}
       <UserButton afterSignOutUrl="/" />
     </div>
   );
