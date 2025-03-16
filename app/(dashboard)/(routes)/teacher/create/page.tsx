@@ -48,14 +48,17 @@ const CreatePage = () => {
 
   const { isSubmitting, isValid } = form.formState;
 
+  // sending user input course data to /api/courses and redirecting to /teacher/courses/${response.data.id}
+  // In Shot  creating course
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const response = await axios.post("/api/course");
+      const response = await axios.post("/api/courses", values);
       router.push(`/teacher/courses/${response.data.id}`);
+      toast.success("Course Created");
     } catch {
       toast.error("Something went wrong");
     }
-    console.log(values);
+    // console.log(values);
   };
 
   return (
