@@ -16,7 +16,7 @@ interface SidebarItemProps {
 // acceptin props and mapping it wiyh interface (SidebarItemProps)
 // Icon is a LucideIcon type
 export const SidebarItem = ({ icon: Icon, label, href }: SidebarItemProps) => {
-  console.log("icons", Icon);
+  // console.log("icons", Icon);
   const pathname = usePathname();
   const router = useRouter();
 
