@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { IconBadge } from "@/components/icon-badge";
 import { LayoutDashboard } from "lucide-react";
 import { motion } from "framer-motion";
+import { TitleForm } from "./_components/TitleForm";
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const { userId } = await auth();
@@ -15,7 +16,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   // getting course Id
   const course = await db.course.findUnique({
     where: {
-      id: params.courseId,
+      id: params?.courseId,
     },
   });
 
@@ -67,6 +68,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
             {/* </motion.div> */}
             <h2>Customize your course</h2>
           </div>
+          <TitleForm initialData={course} courseId={course.id}></TitleForm>
         </div>
       </div>
     </div>
