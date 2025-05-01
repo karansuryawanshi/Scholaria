@@ -18,22 +18,27 @@ import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { cn } from "@/lib/utils";
+import { Textarea } from "@/components/ui/textarea";
 
-interface TitleFormProps {
+interface DescriptionFormProps {
   initialData: {
-    title: string;
+    description: string;
   };
   courseId: string;
 }
 
 const formSchema = z.object({
-  title: z.string().min(1, {
-    message: "Title is required",
+  description: z.string().min(1, {
+    message: "Description is required",
   }),
 });
 
-export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
-  const [isEditing, setIsEditing] = useState(true);
+export const DescriptionForm = ({
+  initialData,
+  courseId,
+}: DescriptionFormProps) => {
+  const [isEditing, setIsEditing] = useState(false);
   const toggleEdit = () => {
     setIsEditing((current) => !current);
   };
@@ -62,18 +67,27 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
   return (
     <div className="mt-6 bg-slate-100 rounded-md p-4">
       <div className="font-medium flex flex-wrap items-center justify-between">
-        Course Title
+        Course Description
         <Button onClick={toggleEdit} className="cursor-pointer" variant="ghost">
           {!isEditing ? (
             <>Cancel</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit Title
+              Edit Description
             </>
           )}
         </Button>
-        {isEditing && <p className="text-sm mt-2">{initialData.title}</p>}
+        {isEditing && (
+          <p
+            className={
+              cn("text-sm mt-2", !initialData.description) &&
+              "text-slate-500 italic"
+            }
+          >
+            {initialData.description || "No Description"}
+          </p>
+        )}
       </div>
       {!isEditing && (
         <Form {...form}>
@@ -83,14 +97,15 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
           >
             <FormField
               control={form.control}
-              name="title"
+              name="description"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
+                    <Textarea
                       disabled={isSubmitting}
-                      placeholder="e.g. 'Advance web development'"
+                      placeholder="e.g. 'This course is about ...'"
                       {...field}
+                      value={field.value ?? ""}
                     />
                   </FormControl>
                 </FormItem>

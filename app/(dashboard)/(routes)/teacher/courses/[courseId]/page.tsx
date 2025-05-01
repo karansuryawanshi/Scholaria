@@ -1,22 +1,35 @@
 import { auth } from "@clerk/nextjs/server";
+// import { useAuth } from "@clerk/nextjs";
 import { db } from "@/lib/db";
-import React from "react";
+import React, { use } from "react";
 import { redirect } from "next/navigation";
 import { IconBadge } from "@/components/icon-badge";
 import { LayoutDashboard } from "lucide-react";
-import { motion } from "framer-motion";
 import { TitleForm } from "./_components/TitleForm";
+import { DescriptionForm } from "./_components/DescriptionForm";
 
-const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
+const CourseIdPage = async ({
+  params,
+}: {
+  params: Promise<{ courseId: string }>;
+}) => {
   const { userId } = await auth();
 
-  if (!userId) {
-    return redirect("/");
-  }
+  // console.log("[params.courseId]", params?.courseId);
+
+  console.log("[userId]", userId);
+
+  // if (!userId) {
+  //   return redirect("/");
+  // }
+
   // getting course Id
+
+  const { courseId } = await params;
+
   const course = await db.course.findUnique({
     where: {
-      id: params?.courseId,
+      id: courseId,
     },
   });
 
@@ -45,30 +58,20 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-y-2">
           <h1 className="text-2xl font-medium">Course setup</h1>
-          {/* <motion.span
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 2 }}
-            className="text-sm text-slate-700"
-          > */}
           Complete all the fields {completionText}
-          {/* </motion.span> */}
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
         <div>
           <div className="flex items-center gap-x-2">
-            {/* <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 2 }}
-            >
-              Hello */}
             <IconBadge icon={LayoutDashboard} />
-            {/* </motion.div> */}
             <h2>Customize your course</h2>
           </div>
           <TitleForm initialData={course} courseId={course.id}></TitleForm>
+          <DescriptionForm
+            initialData={course}
+            courseId={course.id}
+          ></DescriptionForm>
         </div>
       </div>
     </div>

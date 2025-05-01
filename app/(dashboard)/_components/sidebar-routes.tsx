@@ -31,7 +31,6 @@ const teacherRoutes = [
     href: "/teacher/analytics",
   },
 ];
-
 export const SidebarRoutes = () => {
   // const routes = guestRoutes;
 
@@ -42,12 +41,13 @@ export const SidebarRoutes = () => {
   return (
     <div className="flex flex-col w-full">
       {/* mapping array and passing to sidebar Item */}
-      {routes.map((routes) => (
+      {routes.map((routes, index) => (
         <SidebarItem
           icon={routes.icon}
           label={routes.label}
           href={routes.href}
           key={routes.href}
+          index={index}
         />
       ))}
     </div>

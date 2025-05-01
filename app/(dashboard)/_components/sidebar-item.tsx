@@ -11,11 +11,17 @@ interface SidebarItemProps {
   icon: LucideIcon;
   label: string;
   href: string;
+  index: number;
 }
 
 // acceptin props and mapping it wiyh interface (SidebarItemProps)
 // Icon is a LucideIcon type
-export const SidebarItem = ({ icon: Icon, label, href }: SidebarItemProps) => {
+export const SidebarItem = ({
+  icon: Icon,
+  label,
+  href,
+  index,
+}: SidebarItemProps) => {
   // console.log("icons", Icon);
   const pathname = usePathname();
   const router = useRouter();
@@ -31,6 +37,8 @@ export const SidebarItem = ({ icon: Icon, label, href }: SidebarItemProps) => {
     router.push(href);
   };
 
+  // console.log("[index]", index);
+
   return (
     // This button is basically for sidebar buttons to navigate on other url
     <motion.button
@@ -44,9 +52,13 @@ export const SidebarItem = ({ icon: Icon, label, href }: SidebarItemProps) => {
     >
       <motion.div
         className="flex items-center gap-x-2 py-4"
-        whileTap={{ scale: [0.9, 1] }}
-        // whileHover={{ scale: [1, 1.2, 1.1], transition: { duration: 0.3 } }}
-        animate={{ x: [50, -50, 0] }}
+        // whileTap={{ scale: [0.9, 1] }}
+        // animate={{ x: [50, -50, 0] }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: index * 0.3, delay: index * 0.3 }}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.98 }}
       >
         {/* To diaplay icons aside of text on sidebar */}
         <Icon
