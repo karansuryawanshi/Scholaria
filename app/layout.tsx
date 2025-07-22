@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ToastProvider } from "@/components/providers/Toast_Provider";
+import "./globals.css";
+import "@uploadthing/react/styles.css";
 
 import {
   ClerkProvider,
@@ -45,3 +47,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+// 3:13:35

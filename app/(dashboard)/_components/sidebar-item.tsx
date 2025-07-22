@@ -52,8 +52,6 @@ export const SidebarItem = ({
     >
       <motion.div
         className="flex items-center gap-x-2 py-4"
-        // whileTap={{ scale: [0.9, 1] }}
-        // animate={{ x: [50, -50, 0] }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: index * 0.3, delay: index * 0.3 }}

@@ -7,7 +7,7 @@ const DasborardLayout = ({ children }: { children: React.ReactNode }) => {
       <div className="h-[80px] md:pl-50 mixed inset-y-0 w-full z-50">
         <Navbar></Navbar>
       </div>
-      <div className="hidden md:flex h-full w-56 flex-col fixed inset-y-0 z-50">
+      <div className="md:flex h-full w-56 flex-col fixed inset-y-0 z-50">
         <Sidebar />
       </div>
       <main className="md:pl-56 h-full">{children}</main>

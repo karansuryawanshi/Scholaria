@@ -127,11 +127,14 @@ body,
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-@layer base {
+/* @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
   }
-}
+} */
+
+/* import './globals.css'; */
+/* import '@uploadthing/react/styles.css'; */
