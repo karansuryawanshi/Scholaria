@@ -8,6 +8,8 @@ import { LayoutDashboard } from "lucide-react";
 import { TitleForm } from "./_components/TitleForm";
 import { DescriptionForm } from "./_components/DescriptionForm";
 import { ImageForm } from "./_components/ImageForm";
+import { CategoryForm } from "./_components/Category-form";
+// import { Label } from "@radix-ui/react-label";
 
 const CourseIdPage = async ({
   params,
@@ -33,6 +35,14 @@ const CourseIdPage = async ({
       id: courseId,
     },
   });
+
+  const categories = await db.category.findMany({
+    orderBy: {
+      name: "asc",
+    },
+  });
+
+  // console.log("Categories", categories);
 
   if (!course) {
     return redirect("/");
@@ -74,7 +84,16 @@ const CourseIdPage = async ({
             courseId={course.id}
           ></DescriptionForm>
           <ImageForm initialData={course} courseId={course.id}></ImageForm>
+          <CategoryForm
+            initialData={course}
+            courseId={course.id}
+            options={categories.map((category) => ({
+              label: category.name,
+              value: category.id,
+            }))}
+          ></CategoryForm>
         </div>
+        <div className="space-y-6"></div>
       </div>
     </div>
   );
