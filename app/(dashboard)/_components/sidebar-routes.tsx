@@ -4,11 +4,13 @@
 import { Layout, Compass, List, BarChart } from "lucide-react";
 import { SidebarItem } from "./sidebar-item";
 import { usePathname } from "next/navigation";
+import { LayoutGrid } from "./DashboardLogo";
+import { ChartColumn } from "./ChartColumn";
 
 // createing array of objects
 const guestRoutes = [
   {
-    icon: Layout,
+    icon: LayoutGrid,
     label: "Dashboard",
     href: "/",
   },
@@ -26,7 +28,7 @@ const teacherRoutes = [
     href: "/teacher/courses",
   },
   {
-    icon: BarChart,
+    icon: ChartColumn,
     label: "Analytics",
     href: "/teacher/analytics",
   },
@@ -40,6 +42,7 @@ export const SidebarRoutes = () => {
 
   return (
     <div className="flex flex-col w-full">
+      {/* <LayoutGrid></LayoutGrid> */}
       {/* mapping array and passing to sidebar Item */}
       {routes.map((routes, index) => (
         <SidebarItem

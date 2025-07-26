@@ -1,49 +1,42 @@
-// this is for sidebar
 "use client";
 
-import { LucideIcon } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
-// creating interface and defining the datatypes of props
 interface SidebarItemProps {
-  icon: LucideIcon;
+  icon: React.ElementType;
   label: string;
   href: string;
   index: number;
 }
 
-// acceptin props and mapping it wiyh interface (SidebarItemProps)
-// Icon is a LucideIcon type
 export const SidebarItem = ({
   icon: Icon,
   label,
   href,
   index,
 }: SidebarItemProps) => {
-  // console.log("icons", Icon);
   const pathname = usePathname();
   const router = useRouter();
+  const [hovered, setHovered] = useState(false);
 
-  // if path is "/" then it will show active if path is other than "/" it will show inactive initially
   const isActive =
-    (pathname === "/" && href == "/") ||
+    (pathname === "/" && href === "/") ||
     pathname === href ||
     pathname?.startsWith(`${href}/`);
 
-  // Function to navigate
   const onClick = () => {
     router.push(href);
   };
 
-  // console.log("[index]", index);
-
   return (
-    // This button is basically for sidebar buttons to navigate on other url
     <motion.button
       type="button"
       onClick={onClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       className={cn(
         "flex items-center gap-x-2 text-slate-500 text-sm font-[500] pl-6 transition-all hover:text-slate-600 cursor-pointer hover:bg-slate-300/20",
         isActive &&
@@ -55,18 +48,35 @@ export const SidebarItem = ({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: index * 0.3, delay: index * 0.3 }}
-        whileHover={{ scale: 1.05 }}
+        whileHover={{ scale: 1.09 }}
         whileTap={{ scale: 0.98 }}
       >
-        {/* To diaplay icons aside of text on sidebar */}
-        <Icon
-          size={22}
-          className={cn("text-slate-500", isActive && "text-sky-700")}
-        />
-        {/* To diaplay name */}
+        {/* Render icon and pass hovered prop only to LayoutGrid */}
+        {/* {Icon.name === "LayoutGrid" ? (
+          <Icon
+            hovered={hovered}
+            className={cn(isActive ? "text-sky-700" : "text-slate-500")}
+          />
+        ) : (
+          <Icon
+            size={22}
+            className={cn(isActive ? "text-sky-700" : "text-slate-500")}
+          />
+        )} */}
+        {Icon.name === "LayoutGrid" || Icon.name === "ChartColumn" ? (
+          <Icon
+            hovered={hovered}
+            className={cn(isActive ? "text-sky-700" : "text-slate-500")}
+          />
+        ) : (
+          <Icon
+            size={22}
+            className={cn(isActive ? "text-sky-700" : "text-slate-500")}
+          />
+        )}
         {label}
       </motion.div>
-      {/* To display right line to show tab is active */}
+
       <div
         className={cn(
           "ml-auto opacity-0 border-2 border-sky-700 h-full transition-all",
