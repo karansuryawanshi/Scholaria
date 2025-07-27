@@ -1,11 +1,12 @@
 // Defining routes to sidebar
 "use client";
 
-import { Layout, Compass, List, BarChart } from "lucide-react";
+import { Layout, List, BarChart } from "lucide-react";
 import { SidebarItem } from "./sidebar-item";
 import { usePathname } from "next/navigation";
 import { LayoutGrid } from "./DashboardLogo";
 import { ChartColumn } from "./ChartColumn";
+import { Compass } from "./Compass";
 
 // createing array of objects
 const guestRoutes = [

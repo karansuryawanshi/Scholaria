@@ -4,12 +4,19 @@ import { db } from "@/lib/db";
 import React, { use } from "react";
 import { redirect } from "next/navigation";
 import { IconBadge } from "@/components/icon-badge";
-import { CircleDollarSign, LayoutDashboard, ListChecks } from "lucide-react";
+import {
+  CircleDollarSign,
+  File,
+  LayoutDashboard,
+  ListChecks,
+} from "lucide-react";
 import { TitleForm } from "./_components/TitleForm";
 import { DescriptionForm } from "./_components/DescriptionForm";
 import { ImageForm } from "./_components/ImageForm";
 import { CategoryForm } from "./_components/Category-form";
 import { PriceForm } from "./_components/price-form";
+import { LayoutGrid } from "./_components/DashboardIcon";
+import { AttachmentForm } from "./_components/AttachmentForm";
 // import { Label } from "@radix-ui/react-label";
 
 const CourseIdPage = async ({
@@ -34,6 +41,13 @@ const CourseIdPage = async ({
   const course = await db.course.findUnique({
     where: {
       id: courseId,
+    },
+    include: {
+      attachments: {
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
     },
   });
 
@@ -76,7 +90,7 @@ const CourseIdPage = async ({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
         <div>
           <div className="flex items-center gap-x-2">
-            <IconBadge icon={LayoutDashboard} />
+            <LayoutGrid className="w-12 h-12 rounded-lg bg-sky-100 p-1 text-sky-700" />
             <h2>Customize your course</h2>
           </div>
           <TitleForm initialData={course} courseId={course.id}></TitleForm>
@@ -98,16 +112,26 @@ const CourseIdPage = async ({
           <div>
             <div className="flex items-center gap-x-2">
               <IconBadge icon={ListChecks}></IconBadge>
-              <h2 className="text-xl">Course Chapters</h2>
+              <h2>Course Chapters</h2>
             </div>
             <div>TODO : Chapters</div>
           </div>
           <div>
             <div className="flex items-center gap-x-2">
               <IconBadge icon={CircleDollarSign}></IconBadge>
-              <h2 className="text-xl">Sell your course</h2>
+              <h2>Sell your course</h2>
             </div>
             <PriceForm initialData={course} courseId={course.id}></PriceForm>
+          </div>
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={File}></IconBadge>
+              <h2>Resources and Attachments</h2>
+            </div>
+            <AttachmentForm
+              initialData={course}
+              courseId={course.id}
+            ></AttachmentForm>
           </div>
         </div>
       </div>

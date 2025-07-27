@@ -4,6 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { useState } from "react";
+// import { Compass } from "lucide-react";
 
 interface SidebarItemProps {
   icon: React.ElementType;
@@ -63,7 +64,9 @@ export const SidebarItem = ({
             className={cn(isActive ? "text-sky-700" : "text-slate-500")}
           />
         )} */}
-        {Icon.name === "LayoutGrid" || Icon.name === "ChartColumn" ? (
+        {Icon.name === "LayoutGrid" ||
+        Icon.name === "ChartColumn" ||
+        Icon.name === "Compass" ? (
           <Icon
             hovered={hovered}
             className={cn(isActive ? "text-sky-700" : "text-slate-500")}
