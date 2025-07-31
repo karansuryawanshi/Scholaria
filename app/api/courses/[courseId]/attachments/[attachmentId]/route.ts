@@ -27,7 +27,7 @@ export async function DELETE(
         const attachment = await db.attachment.delete({
             where:{
                 courseId:params.courseId,
-                id:params.attachmentId
+                id:params?.attachmentId
             }
         })
 

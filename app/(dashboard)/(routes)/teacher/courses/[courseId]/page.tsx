@@ -17,6 +17,7 @@ import { CategoryForm } from "./_components/Category-form";
 import { PriceForm } from "./_components/price-form";
 import { LayoutGrid } from "./_components/DashboardIcon";
 import { AttachmentForm } from "./_components/AttachmentForm";
+import { ChaptersForm } from "./_components/Chapters-form";
 // import { Label } from "@radix-ui/react-label";
 
 const CourseIdPage = async ({
@@ -28,7 +29,7 @@ const CourseIdPage = async ({
 
   // console.log("[params.courseId]", params?.courseId);
 
-  console.log("[userId]", userId);
+  // console.log("[userId]", userId);
 
   // if (!userId) {
   //   return redirect("/");
@@ -41,8 +42,14 @@ const CourseIdPage = async ({
   const course = await db.course.findUnique({
     where: {
       id: courseId,
+      userId: userId!,
     },
     include: {
+      Chapter: {
+        orderBy: {
+          position: "asc",
+        },
+      },
       attachments: {
         orderBy: {
           createdAt: "desc",
@@ -70,6 +77,7 @@ const CourseIdPage = async ({
     course.imageUrl,
     course.price,
     course.categoryId,
+    course.Chapter.some((chapter) => chapter.isPublished),
   ];
 
   // Calcualting total fields
@@ -114,7 +122,10 @@ const CourseIdPage = async ({
               <IconBadge icon={ListChecks}></IconBadge>
               <h2>Course Chapters</h2>
             </div>
-            <div>TODO : Chapters</div>
+            <ChaptersForm
+              initialData={{ ...course, chapters: course.Chapter }}
+              courseId={course.id}
+            ></ChaptersForm>
           </div>
           <div>
             <div className="flex items-center gap-x-2">
@@ -140,3 +151,5 @@ const CourseIdPage = async ({
 };
 
 export default CourseIdPage;
+
+// 4:23:12
